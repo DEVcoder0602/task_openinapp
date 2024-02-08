@@ -13,7 +13,7 @@ export async function POST(request) {
 
     if (!user) {
       return NextResponse.json(
-        { error: "User does not exist" },
+        { message: "User does not exist" },
         { status: 400 }
       );
     }
@@ -22,7 +22,7 @@ export async function POST(request) {
 
     if (!isPasswordMatch) {
       return NextResponse.json(
-        { error: "Invalid credentials" },
+        { message: "Invalid credentials" },
         { status: 400 }
       );
     }
@@ -43,6 +43,7 @@ export async function POST(request) {
 
     response.cookies.set("token", token, {
       httpOnly: true,
+      maxAge: 60 * 60 * 24,
     });
 
     return response;

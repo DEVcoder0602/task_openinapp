@@ -1,14 +1,28 @@
 "use client";
 import Navbar from "@/components/Navbar/Navbar";
 import { LogoIconDark, bellIcon, crossIcon, hamburgerIcon } from "@/ui/icons";
+import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function DashboardLayout({ children }) {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   const toggleNavbar = () => {
     setNavbarOpen(!navbarOpen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post("/api/users/logout");
+      if (response.status === 200) {
+        toast.success(response.data.message);
+        window.location.href = "/login";
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -88,7 +102,7 @@ export default function DashboardLayout({ children }) {
               </div>
               <div className="flex flex-row gap-4">
                 <button>{bellIcon}</button>
-                <button>Profile</button>
+                <button onClick={handleLogout}>Profile</button>
               </div>
             </div>
             {children}
