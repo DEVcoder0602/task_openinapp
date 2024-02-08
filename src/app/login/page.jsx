@@ -46,8 +46,8 @@ const Login = () => {
         router.push("/dashboard");
       }
     } catch (error) {
-      toast.error(error.code);
-      console.log("Login Failed : ", error);
+      toast.error(error.response.data.message);
+      console.log("Login Failed : ", error.response);
     } finally {
       setLoading(false);
     }

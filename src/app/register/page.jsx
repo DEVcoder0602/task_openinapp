@@ -21,6 +21,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { selectFormData, setFormData } from "@/redux/slices/userSlice";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const router = useRouter();
@@ -41,10 +42,11 @@ const Register = () => {
       if (response.status === 201) {
         setLoading(false);
         dispatch(setFormData({}));
-        console.log("Registration Success : ", response);
+        toast.success(response.data.message);
         router.push("/login");
       }
     } catch (error) {
+      toast.error(error);
       console.log("Registration Failed : ", error);
     } finally {
       setLoading(false);
@@ -161,7 +163,7 @@ const Register = () => {
               onClick={onRegister}
               disabled={loading}
             >
-              {loading ? `${SpinnerIcon}` : "Register"}
+              {loading ? SpinnerIcon : "Register"}
             </button>
             <p className="text-text_secondary text-sm my-6 text-center">
               Already have an account?{" "}
