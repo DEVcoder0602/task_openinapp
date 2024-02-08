@@ -21,6 +21,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { selectFormData, setFormData } from "@/redux/slices/userSlice";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const router = useRouter();
@@ -40,11 +41,12 @@ const Login = () => {
       setLoading(true);
       const response = await axios.post("/api/users/login", formData);
       if (response.status === 200) {
+        toast.success(response.data.message);
         setLoading(false);
-        console.log("Login Success : ", response);
         router.push("/dashboard");
       }
     } catch (error) {
+      toast.error(error.code);
       console.log("Login Failed : ", error);
     } finally {
       setLoading(false);
