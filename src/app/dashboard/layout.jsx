@@ -1,4 +1,5 @@
 "use client";
+import Navbar from "@/components/Navbar/Navbar";
 import { LogoIconDark, bellIcon, crossIcon, hamburgerIcon } from "@/ui/icons";
 import Link from "next/link";
 import { useState } from "react";
@@ -13,14 +14,14 @@ export default function DashboardLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="grid grid-cols-4 bg-background_white">
+        <div className="grid grid-cols-6 h-screen bg-background_white">
           <div
             className={`fixed z-40 h-full w-full top-0 left-0 bg-black/20 backdrop-blur-sm backdrop-filter md:hidden ${
               navbarOpen ? "block" : "hidden"
             }`}
           ></div>
-          <div className="md:col-span-1 hidden md:block">
-            Here will be the navbar
+          <div className="md:col-span-1 hidden md:block bg-white">
+            <Navbar />
           </div>
 
           {/* Navbar drawer using Tailwind CSS transition */}
@@ -69,24 +70,25 @@ export default function DashboardLayout({ children }) {
             </nav>
           </div>
 
-          <div className="md:col-span-3 col-span-4 w-full">
+          <div className="md:col-span-5 col-span-6 w-full h-full">
             <div
               className={`flex flex-row items-center ${
                 navbarOpen ? "justify-end" : "justify-between"
-              } px-4 py-6`}
+              } px-4 py-6 md:bg-background_white bg-white`}
             >
               {!navbarOpen && (
-                <div className="flex flex-row items-center gap-3">
-                  <button className="md:hidden block" onClick={toggleNavbar}>
-                    {hamburgerIcon}
-                  </button>
+                <div className="md:hidden flex flex-row items-center gap-3">
+                  <button onClick={toggleNavbar}>{hamburgerIcon}</button>
                   <Link href="/">{LogoIconDark}</Link>
                   Base
                 </div>
               )}
+              <div className="hidden md:block text-2xl font-bold">
+                Upload CSV
+              </div>
               <div className="flex flex-row gap-4">
                 <button>{bellIcon}</button>
-                <button>{bellIcon}</button>
+                <button>Profile</button>
               </div>
             </div>
             {children}
