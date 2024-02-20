@@ -1,19 +1,18 @@
 import { dbConnect } from "@/dbConfig/dbConfig";
 import User from "@/models/UserModel";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 dbConnect();
 
 export async function POST(request) {
   try {
-    const { name, email, password } = await request.json();
+    const { username, email, password } = await request.json();
     const user = await User.findOne({ email });
 
     if (user) {
       return NextResponse.json(
-        { error: "User does not exist" },
+        { message: "User already present" },
         { status: 400 }
       );
     }
@@ -21,7 +20,7 @@ export async function POST(request) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      name,
+      username,
       email,
       password: hashedPassword,
     });
@@ -32,14 +31,11 @@ export async function POST(request) {
       {
         success: true,
         message: "User registered successfully",
-        data: { name, email },
+        data: newUser,
       },
       { status: 201 }
     );
   } catch (error) {
-    return NextResponse.json(
-      { success: false, error: error.message },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

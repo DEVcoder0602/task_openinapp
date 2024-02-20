@@ -15,12 +15,12 @@ export default function DashboardLayout({ children }) {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post("/api/users/logout");
-      if (response.status === 200) {
-        toast.success(response.data.message);
-        window.location.href = "/login";
-      }
+      const response = await axios.get("/api/users/logout");
+      toast.success("Logout Successful");
+      console.log("Logout Successful : ", response.data.message);
+      window.location.href = "/login";
     } catch (error) {
+      // console.log("Logout Failed : ", error);
       toast.error(error.message);
     }
   };
