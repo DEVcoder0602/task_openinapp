@@ -41,13 +41,13 @@ const Register = () => {
       const response = await axios.post("/api/users/register", formData);
       if (response.status === 201) {
         setLoading(false);
-        dispatch(setFormData({}));
         toast.success(response.data.message);
+        dispatch(setFormData({}));
         router.push("/login");
       }
     } catch (error) {
-      toast.error(error);
       console.log("Registration Failed : ", error);
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -110,14 +110,14 @@ const Register = () => {
           <form className=" m-auto bg-white rounded-lg p-8">
             <div>
               <label
-                htmlFor="name"
+                htmlFor="username"
                 className="block text-sm font-medium text-black"
               >
                 Username
               </label>
               <input
                 type="text"
-                name="name"
+                name="username"
                 required
                 className="w-full px-3 py-2 my-2 rounded-lg outline-none focus:bg-input_background_active bg-input_background"
                 onChange={handleInputChange}
@@ -168,15 +168,17 @@ const Register = () => {
             <p className="text-text_secondary text-sm my-6 text-center">
               Already have an account?{" "}
               <Link href="/login" className="text-text_link">
-                Login here
+                <button onClick={() => dispatch(setFormData({}))}>
+                  Login here
+                </button>
               </Link>
             </p>
           </form>
         </div>
-        <button>
+        {/* <button>
           Go to <Link href="/">Home Page</Link> or{" "}
           <Link href="/register">Register Page</Link>
-        </button>
+        </button> */}
       </div>
       <div className="md:hidden block">
         <div className="flex flex-row justify-center items-center gap-4 p-4">

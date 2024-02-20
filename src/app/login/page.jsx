@@ -46,8 +46,8 @@ const Login = () => {
         router.push("/dashboard");
       }
     } catch (error) {
+      console.log("Login Failed : ", error);
       toast.error(error.response.data.message);
-      console.log("Login Failed : ", error.response);
     } finally {
       setLoading(false);
     }
@@ -158,10 +158,10 @@ const Login = () => {
             </p>
           </form>
         </div>
-        <button>
+        {/* <button>
           Go to <Link href="/">Home Page</Link> or{" "}
           <Link href="/register">Register Page</Link>
-        </button>
+        </button> */}
       </div>
       <div className="md:hidden block">
         <div className="flex flex-row justify-center items-center gap-4 p-4">
